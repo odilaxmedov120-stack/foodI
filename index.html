@@ -1,0 +1,905 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Delivery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .btn {
+            padding: 12px 28px;
+            border-radius: 8px;
+            display: inline-block;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-green {
+            background: #22C55E;
+            color: white;
+        }
+        
+        .btn-outline {
+            border: 1px solid #22C55E;
+            color: #22C55E;
+            background: transparent;
+        }
+        
+        .subtitle {
+            color: #22C55E;
+            font-weight: 600;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        /* Header */
+        .header {
+            padding: 20px 0;
+        }
+        
+        .header.container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .nav {
+            display: inline-block;
+            padding-left: 400px;
+        }
+        
+        .nav a {
+            margin: 0 15px;
+            font-weight: 500;
+        }
+
+        .header-btns {
+            display: inline-block;
+            padding-left: 50px;
+        }
+        
+        .header-btns a {
+            margin-left: 15px;
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 60px 0;
+        }
+        
+        .hero.container {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+
+        .hero__wrapper {
+            display: flex;
+        }
+        
+        .hero-content {
+            display: inline-block;
+        }
+        
+        .hero-content h1 {
+            font-size: 52px;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+        
+        .hero-content h1 span {
+            color: #22C55E;
+        }
+        
+        .hero-content p {
+            margin-bottom: 30px;
+            color: #666;
+            font-size: 24px;
+            width: 400px;
+            display: inline-block;
+        }
+        
+        .hero-btns.btn {
+            margin-right: 15px;
+            display: inline-block;
+        }
+        
+        .hero-products {
+            padding-top: 50px;
+            padding-left: 100px;
+            background-color: transparent;
+            display: block;
+            gap: 20px;
+            display: flex;
+            max-width: 220px;
+            height: 300px;
+        }
+        
+        .product-card {
+            background: #fff;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        
+        .product-card img {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 10px;
+            background: #f3f3f3;
+        }
+        
+        .product-card h4 {
+            margin-bottom: 5px;
+        }
+        
+        .product-card p {
+            font-size: 12px;
+            color: #888;
+            margin-bottom: 8px;
+        }
+        
+        .info-bar {
+            padding: 30px 0;
+            background: #f9f9f9;
+            display: flex;
+            justify-content: space-evenly;
+        }
+        
+        .info-bar.container {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .info-item span {
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .info-item {
+            display: inline-block;
+            justify-content: space-between;
+            gap: 50px;
+        }
+        
+        .info-item p {
+            color: #888;
+            font-size: 14px;
+        }
+        
+        .popular {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .popular h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+        
+        .popular-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .food-item {
+            background: #fff;
+            border-radius: 16px;
+            overflow: hidden;
+            text-align: left;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+        }
+        
+        .food-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #f3f3f3;
+        }
+        
+        .food-item h3 {
+            padding: 15px 20px 0;
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px 20px;
+        }
+        
+        .price-row span {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .add-btn {
+            background: #22C55E;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            font-size: 20px;
+            cursor: pointer;
+        }
+        
+        .center-btn {
+            margin: 0 auto;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .why-us {
+            padding: 80px 0;
+            background: #f9f9f9;
+            text-align: center;
+        }
+        
+        .why-us h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .service-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 16px;
+        }
+        
+        .icon.green {
+            width: 60px;
+            height: 60px;
+            background: #22C55E;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+        
+        .service-card h3 {
+            margin-bottom: 15px;
+        }
+        
+        .service-card p {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .balanced-diet {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .balanced-diet h2 {
+            font-size: 36px;
+            margin-bottom: 60px;
+        }
+        
+        .diet-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .diet-step {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .diet-step img {
+            width: 120px;
+            height: 100px;
+            background: #f3f3f3;
+            margin-bottom: 15px;
+        }
+        
+        .diet-step h4 {
+            color: #22C55E;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .diet-step p {
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .diet-center img {
+            width: 200px;
+            height: 200px;
+            background: #f3f3f3;
+            border-radius: 50%;
+        }
+        
+        .testimonials {
+            padding: 80px 0;
+            background: #f9f9f9;
+        }
+        
+        .testimonials h2 {
+            font-size: 36px;
+            margin-bottom: 40px;
+            text-align: center;
+        }
+        
+        .testimonial-content {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+        }
+        
+        .testimonial-card {
+            flex: 1;
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            position: relative;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-author img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #f3f3f3;
+        }
+        
+        .testimonial-author h4 {
+            font-size: 16px;
+        }
+        
+        .testimonial-author p {
+            font-size: 13px;
+            color: #888;
+        }
+        
+        .testimonial-text {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        .quote-icon {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 30px;
+            height: 30px;
+            background: #22C55E;
+            border-radius: 50%;
+        }
+        
+        .testimonial-image {
+            flex: 1;
+        }
+        
+        .testimonial-image img {
+            width: 100%;
+            background: #f3f3f3;
+        }
+        
+        .newsletter-section {
+            padding: 60px 0;
+        }
+        
+        .newsletter-box {
+            background: #1F2937;
+            border-radius: 16px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            color: white;
+        }
+        
+        .newsletter-box img {
+            width: 250px;
+            height: 200px;
+            background: #374151;
+            border-radius: 12px;
+        }
+        
+        .newsletter-text {
+            flex: 1;
+        }
+        
+        .newsletter-text h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+        
+        .newsletter-text p {
+            color: #9CA3AF;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .subscribe-box {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .subscribe-box input {
+            flex: 1;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: none;
+        }
+        
+        .footer {
+            background: #F3F4F6;
+            padding: 60px 0 0;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h4 {
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .footer-col p {
+            color: #6B7280;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 10px;
+            color: #6B7280;
+            font-size: 14px;
+        }
+        
+        .footer-input {
+            display: flex;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .footer-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #D1D5DB;
+            border-radius: 6px;
+        }
+        
+        .footer-input button {
+            background: #22C55E;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        
+        .contact-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: #6B7280;
+            font-size: 14px;
+        }
+        
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .instagram-grid img {
+            width: 100%;
+            height: 70px;
+            background: #E5E7EB;
+            border-radius: 8px;
+        }
+        
+        .footer-bottom {
+            background: #22C55E;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+            font-size: 14px;
+        }
+        
+        .footer-bottom.container {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .footer-bottom a {
+            margin: 0 10px;
+        }
+        
+        
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="logo">FoodI</div>
+            <nav class="nav">
+                <a href="#">Home</a>
+                <a href="#">Menu</a>
+                <a href="#">Service</a>
+                <a href="#">Shop</a>
+            </nav>
+            <div class="header-btns">
+                <a href="#" class="btn-search">Search</a>
+                <a href="#" class="btn-cart">0</a>
+                <a href="#" class="btn btn-green">Sign In</a>
+            </div>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container hero__wrapper">
+            <div class="hero-content">
+                <h1>The Fastest<br>Delivery<br><span>In Your City</span></h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Commodo, sed proin amet a vestibulum enim volutpat lacus.</p>
+                <div class="hero-btns">
+                    <a href="#" class="btn btn-green">Order Now</a>
+                    <a href="#" class="btn btn-outline">Order Process</a>
+                </div>
+            </div>
+            <div class="hero-products">
+                <div class="product-card">
+                    <img src="./img/burger_sandwich_PNG4135 1.png" alt="Burger">
+                    <h4>Burger</h4>
+                    <p>Mushroom Sauce</p>
+                    <b>$5.15</b>
+                </div>
+                <div class="product-card">
+                    <img src="./img/food-combo.png" alt="Food Combo">
+                    <h4>Food Combo</h4>
+                    <p>Mushroom Sauce</p>
+                    <b>$9.15</b>
+                </div>
+                <div class="product-card">
+                    <img src="./img/pizza.png" alt="Pizza">
+                    <h4>Pizza</h4>
+                    <p>Mushroom Sauce</p>
+                    <b>$6.15</b>
+                </div>
+                <div class="product-card">
+                    <img src="./img/cake.png" alt="Cake">
+                    <h4>Cake</h4>
+                    <p>Mushroom Sauce</p>
+                    <b>$5.15</b>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="info-bar">
+        <div class="container">
+            <div class="info-item">
+                <span>Today 10:00am - 10:00pm                      </span>
+                <p>Working time                      </p>
+            </div>
+            <div class="info-item">
+                <span>Washington, D.C., DC, USA                      </span>
+                <p>Our Location                      </p>
+            </div>
+            <div class="info-item">
+                <span>+0123 456 7891                      </span>
+                <p>Phone Number                      </p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="popular">
+        <div class="container">
+            <p class="subtitle">Product</p>
+            <h2>Most Popular Items</h2>
+            <div class="popular-grid" id="productGrid">
+                <div class="food-item">
+                    <img src="./img/gyra.jpg" alt="Gyro Sandwich">
+                    <h3>Gyro Sandwich</h3>
+                    <div class="price-row">
+                        <span>$15.00</span>
+                        <button class="add-btn">+</button>
+                    </div>
+                </div>
+                <div class="food-item">
+                    <img src="./img/enchilado.jpg" alt="Enchilada">
+                    <h3>Enchilada</h3>
+                    <div class="price-row">
+                        <span>$25.50</span>
+                        <button class="add-btn">+</button>
+                    </div>
+                </div>
+                <div class="food-item">
+                    <img src="./img/beef.jpg" alt="Green Beans">
+                    <h3>Green Beans</h3>
+                    <div class="price-row">
+                        <span>$12.00</span>
+                        <button class="add-btn">+</button>
+                    </div>
+                </div>
+                <div class="food-item">
+                    <img src="./img/pizza2.jpg" alt="Pizza">
+                    <h3>Pizza</h3>
+                    <div class="price-row">
+                        <span>$18.50</span>
+                        <button class="add-btn">+</button>
+                    </div>
+                </div>
+                <div class="food-item">
+                    <img src="./img/chicken.jpg" alt="Chicken Pot Pie">
+                    <h3>Chicken Pot Pie</h3>
+                    <div class="price-row">
+                        <span>$25.00</span>
+                        <button class="add-btn">+</button>
+                    </div>
+                </div>
+                <div class="food-item">
+                    <img src="./img/salad.jpg" alt="Green Salad">
+                    <h3>Green Salad</h3>
+                    <div class="price-row">
+                        <span>$15.00</span>
+                        <button class="add-btn">+</button>
+                    </div>
+                </div>
+                
+                <div class="food-item hidden product-more">
+                    <img src="./img/sushi.png" alt="Sushi">
+                    <h3>Sushi Set</h3>
+                    <div class="price-row">
+                        <span>$22.00</span>
+                        <button class="add-btn">+</button>
+                    </div>
+                </div>
+                <div class="food-item hidden product-more">
+                    <img src="./img/steak.png" alt="Steak">
+                    <h3>Beef Steak</h3>
+                    <div class="price-row">
+                        <span>$35.00</span>
+                        <button class="add-btn">+</button>
+                    </div>
+                </div>
+                <div class="food-item hidden product-more">
+                    <img src="./img/pasta.png" alt="Pasta">
+                    <h3>Italian Pasta</h3>
+                    <div class="price-row">
+                        <span>$14.50</span>
+                        <button class="add-btn">+</button>
+                    </div>
+                </div>
+                <div class="food-item hidden product-more">
+                    <img src="./img/soup.png" alt="Soup">
+                    <h3>Tomato Soup</h3>
+                    <div class="price-row">
+                        <span>$8.00</span>
+                        <button class="add-btn">+</button>
+                    </div>
+                </div>
+                <div class="food-item hidden product-more">
+                    <img src="./img/tacos.png" alt="Tacos">
+                    <h3>Chicken Tacos</h3>
+                    <div class="price-row">
+                        <span>$11.00</span>
+                        <button class="add-btn">+</button>
+                    </div>
+                </div>
+                <div class="food-item hidden product-more">
+                    <img src="./img/donut.png" alt="Donut">
+                    <h3>Choco Donut</h3>
+                    <div class="price-row">
+                        <span>$4.50</span>
+                        <button class="add-btn">+</button>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-green center-btn" id="seeMoreBtn">See More Product</button>
+        </div>
+    </section>
+    
+    <section class="why-us">
+        <div class="container">
+            <p class="subtitle">Services</p>
+            <h2>Why Choose Our Favorite Food</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <h3>Qualityfull Food</h3>
+                    <p>But I must explain to you how all this mistaken idea of denouncing pleasur and prasising pain was bron.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Healthy Food</h3>
+                    <p>But I must explain to you how all this mistaken idea of denouncing pleasur and prasising pain was bron.</p>
+                </div>
+                <div class="service-card">
+                    <h3>Fast Delivery</h3>
+                    <p>But I must explain to you how all this mistaken idea of denouncing pleasur and prasising pain was bron.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="balanced-diet">
+        <div class="container">
+            <p class="subtitle">How to work</p>
+            <h2>Food Us An Important Part Of A Balanced Diet</h2>
+            <div class="diet-steps">
+                <div class="diet-step">
+                    <img src="./img/choose.png" alt="Choose">
+                    <h4>CHOOSE</h4>
+                    <p>Do you want to lose weight, exercise, adhere to a therapeutic diet? Our dietitian will help you with choosing the right program!</p>
+                </div>
+                <div class="diet-step diet-center">
+                    <img src="./img/plate.png" alt="Prepare">
+                    <h4>PREPARE FOOD</h4>
+                    <p>Do you want to lose weight, exercise, adhere to a therapeutic diet? Our dietitian will help you with choosing the right program!</p>
+                </div>
+                <div class="diet-step">
+                    <img src="./img/bags.png" alt="Deliver">
+                    <h4>DELIVER</h4>
+                    <p>Do you want to lose weight, exercise, adhere to a therapeutic diet? Our dietitian will help you with choosing the right program!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="testimonials">
+        <div class="container">
+            <p class="subtitle">Testimonials</p>
+            <h2>Our Happy Client Says</h2>
+            <div class="testimonial-content">
+                <div class="testimonial-card">
+                    <div class="testimonial-author">
+                        <img src="./img/client.jpg" alt="Client">
+                        <div>
+                            <h4>Willians Jhone</h4>
+                            <p>CEO & Founder</p>
+                        </div>
+                    </div>
+                    <p class="testimonial-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Amet nisl tincidunt adipiscing dictumst blandit hac. Lectus cras velit sed dignissim ac, aliquet. Metus egestas habitant feugiat neque ultrices nunc, dolor egestas mus.</p>
+                </div>
+                <div class="testimonial-image">
+                    <img src="./img/burgers.png" alt="Food">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-box">
+                <img src="./img/big-burger.png" alt="Burger">
+                <div class="newsletter-text">
+                    <h3>Subcribe To Our Newsletter</h3>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Purus tempor id faucibus quam lobortis.</p>
+                    <div class="subscribe-box">
+                        <input type="text" placeholder="Type your email...">
+                        <button class="btn btn-green">SUBCRIBE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Foodtrack</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Commodo libero viverra dapibus odio sit malesuada in quis. Arcu tristique elementum viverra integer id.</p>
+                    <div class="footer-input">
+                        <input type="text" placeholder="Your Your Email">
+                        <button>-></button>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact us</h4>
+                    <div class="contact-item">
+                        <span> 1234 Street Name, City Name, United States</span>
+                    </div>
+                    <div class="contact-item">
+                        <span> +0123-456789</span>
+                    </div>
+                    <div class="contact-item">
+                        <span> info@foodtrack.com</span>
+                    </div>
+                    <div class="contact-item">
+                        <span> Sun - Sat / 10:00 AM - 8:00 PM</span>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Our Menu</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Instagram Gallery</h4>
+                    <div class="instagram-grid">
+                        <img src="./img/in-1.jpg" alt="">
+                        <img src="./img/in-2.jpg" alt="">
+                        <img src="./img/in-3.jpg" alt="">
+                        <img src="./img/in-4.jpg" alt="">
+                        <img src="./img/in-5.jpg" alt="">
+                        <img src="./img/in-6.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        const seeMoreBtn = document.getElementById('seeMoreBtn');
+        const hiddenProducts = document.querySelectorAll('.product-more');
+        let currentIndex = 0;
+        const itemsPerClick = 6;
+        
+        seeMoreBtn.addEventListener('click', function() {
+            for (let i = currentIndex; i < currentIndex + itemsPerClick; i++) {
+                if (hiddenProducts[i]) {
+                    hiddenProducts[i].classList.remove('hidden');
+                }
+            }
+            currentIndex += itemsPerClick;
+            
+            if (currentIndex >= hiddenProducts.length) {
+                seeMoreBtn.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
