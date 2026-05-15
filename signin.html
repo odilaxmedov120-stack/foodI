@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In — FoodI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --green: #22C55E;
+            --green-dark: #16A34A;
+            --green-light: #DCFCE7;
+            --dark: #111827;
+            --gray: #6B7280;
+            --light: #F9FAFB;
+            --white: #ffffff;
+            --shadow: 0 8px 30px rgba(0,0,0,0.08);
+            --shadow-hover: 0 20px 60px rgba(34,197,94,0.22);
+            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            background: var(--light);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(34,197,94,0.1);
+            transition: box-shadow 0.3s;
+        }
+
+        .header:hover {
+            box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+        }
+
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--green);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .logo:hover {
+            letter-spacing: 2px;
+            color: var(--green-dark);
+        }
+
+        .nav {
+            display: flex;
+            gap: 5px;
+        }
+
+        .nav a {
+            padding: 8px 16px;
+            font-weight: 500;
+            border-radius: 8px;
+            position: relative;
+            transition: var(--transition);
+            color: var(--dark);
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--green);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover,
+        .nav a.active {
+            color: var(--green);
+            background: var(--green-light);
+        }
+
+        .nav a:hover::after,
+        .nav a.active::after {
+            width: 50%;
+        }
+
+        .header-btns {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid #E5E7EB;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+            background: white;
+        }
+
+        .icon-btn:hover {
+            border-color: var(--green);
+            background: var(--green-light);
+            transform: scale(1.1);
+        }
+
+        .btn {
+            padding: 11px 26px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .btn-green {
+            background: var(--green);
+            color: white;
+            box-shadow: 0 4px 15px rgba(34,197,94,0.3);
+        }
+
+        .btn-green:hover {
+            background: var(--green-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(34,197,94,0.4);
+        }
+
+        /* ── MAIN LAYOUT ── */
+        .auth-page {
+            min-height: calc(100vh - 80px);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        /* ── LEFT PANEL ── */
+        .auth-left {
+            background: linear-gradient(145deg, #0f172a, #1e293b);
+            padding: 60px 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-left::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: -80px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(34,197,94,0.2), transparent 70%);
+            border-radius: 50%;
+            animation: glow 4s ease-in-out infinite;
+        }
+
+        .auth-left::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(34,197,94,0.1), transparent 70%);
+            border-radius: 50%;
+            animation: glow 4s ease-in-out infinite 2s;
+        }
+
+        @keyframes glow {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.7; }
+        }
+
+        .auth-left-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .auth-left h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 46px;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .auth-left h2 span {
+            color: var(--green);
+        }
+
+        .auth-left p {
+            color: #94a3b8;
+            font-size: 16px;
+            line-height: 1.8;
+            margin-bottom: 44px;
+            max-width: 380px;
+        }
+
+        .feature-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #e2e8f0;
+            font-size: 15px;
+            transition: var(--transition);
+            cursor: default;
+        }
+
+        .feature-list li:hover {
+            color: white;
+            transform: translateX(6px);
+        }
+
+        .feature-list li:hover .feat-icon {
+            background: var(--green-dark);
+            transform: scale(1.12) rotate(8deg);
+        }
+
+        .feat-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--green);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+
+        .auth-food-img {
+            margin-top: 50px;
+            width: 220px;
+            height: 180px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: var(--transition);
+        }
+
+        .auth-food-img:hover {
+            transform: scale(1.04) rotate(-2deg);
+            border-color: rgba(34,197,94,0.4);
+        }
+
+        .auth-food-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* ── RIGHT PANEL ── */
+        .auth-right {
+            background: white;
+            padding: 60px 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* ── TABS ── */
+        .auth-tabs {
+            display: flex;
+            gap: 6px;
+            background: var(--light);
+            padding: 6px;
+            border-radius: 14px;
+            margin-bottom: 38px;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 11px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+
+        .auth-tab:hover {
+            color: var(--dark);
+            background: rgba(255,255,255,0.7);
+        }
+
+        .auth-tab.active {
+            background: white;
+            color: var(--dark);
+            box-shadow: var(--shadow);
+        }
+
+        /* ── FORMS ── */
+        .auth-form {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .auth-form.visible {
+            display: flex;
+        }
+
+        .form-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 30px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .form-subtitle {
+            font-size: 14px;
+            color: var(--gray);
+            margin-bottom: 8px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .form-group label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--dark);
+            letter-spacing: 0.3px;
+        }
+
+        .form-group input {
+            padding: 13px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            color: var(--dark);
+            background: var(--light);
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .form-group input:focus {
+            border-color: var(--green);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(34,197,94,0.1);
+        }
+
+        .form-group input:hover {
+            border-color: #9CA3AF;
+        }
+
+        .form-group input::placeholder {
+            color: #9CA3AF;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper input {
+            width: 100%;
+            padding-right: 48px;
+        }
+
+        .eye-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            font-size: 18px;
+            color: var(--gray);
+            transition: color 0.3s;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .eye-toggle:hover {
+            color: var(--green);
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .remember-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--gray);
+            transition: color 0.3s;
+        }
+
+        .remember-label:hover {
+            color: var(--dark);
+        }
+
+        .remember-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--green);
+            cursor: pointer;
+        }
+
+        .forgot-link {
+            color: var(--green);
+            font-weight: 600;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .forgot-link:hover {
+            color: var(--green-dark);
+            text-decoration: underline;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: var(--green);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255,255,255,0.15);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: var(--green-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(34,197,94,0.4);
+        }
+
+        .submit-btn:hover::after {
+            opacity: 1;
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* ── DIVIDER ── */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #D1D5DB;
+            font-size: 13px;
+        }
+
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: #E5E7EB;
+        }
+
+        /* ── SOCIAL BUTTONS ── */
+        .social-btns {
+            display: flex;
+            gap: 12px;
+        }
+
+        .social-btn {
+            flex: 1;
+            padding: 12px 16px;
+            border: 2px solid #E5E7EB;
+            border-radius: 12px;
+            background: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            color: var(--dark);
+        }
+
+        .social-btn:hover {
+            border-color: var(--green);
+            background: var(--green-light);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(34,197,94,0.15);
+        }
+
+        .social-btn .s-icon {
+            font-size: 18px;
+        }
+
+        /* ── TERMS ── */
+        .terms-text {
+            font-size: 12px;
+            color: #9CA3AF;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        .terms-text a {
+            color: var(--green);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .terms-text a:hover {
+            color: var(--green-dark);
+            text-decoration: underline;
+        }
+
+        /* ── SUCCESS STATE ── */
+        .success-msg {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 16px;
+            padding: 30px 0;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--green-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            animation: popIn 0.4s ease both;
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0); opacity: 0; }
+            to   { transform: scale(1); opacity: 1; }
+        }
+
+        .success-msg h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+        }
+
+        .success-msg p {
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: #F3F4F6;
+            padding: 60px 0 0;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 18px;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .footer-col p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--gray);
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+            padding: 3px 0;
+        }
+
+        .footer-col ul li a::before {
+            content: '›';
+            color: var(--green);
+            font-size: 18px;
+            transform: translateX(-4px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--green-dark);
+            transform: translateX(6px);
+        }
+
+        .footer-col ul li a:hover::before {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .footer-input {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+        }
+
+        .footer-input input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1.5px solid #D1D5DB;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            transition: var(--transition);
+        }
+
+        .footer-input input:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+
+        .footer-input button {
+            background: var(--green);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+
+        .footer-input button:hover {
+            background: var(--green-dark);
+            transform: translateX(3px);
+        }
+
+        .contact-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--gray);
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: var(--transition);
+            cursor: default;
+        }
+
+        .contact-item:hover {
+            background: white;
+            color: var(--dark);
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .instagram-grid img {
+            width: 100%;
+            height: 70px;
+            background: #E5E7EB;
+            border-radius: 10px;
+            object-fit: cover;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .instagram-grid img:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 20px rgba(34,197,94,0.25);
+            filter: brightness(1.05) saturate(1.2);
+        }
+
+        .footer-bottom {
+            background: var(--green);
+            color: white;
+            padding: 20px 0;
+            font-size: 14px;
+        }
+
+        .footer-bottom .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom a {
+            margin: 0 10px;
+            opacity: 0.85;
+            transition: opacity 0.3s;
+        }
+
+        .footer-bottom a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="container">
+        <a href="index.html" class="logo">FoodI</a>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="menu.html">Menu</a>
+            <a href="service.html">Service</a>
+            <a href="shop.html">Shop</a>
+        </nav>
+        <div class="header-btns">
+            <a href="#" class="icon-btn">🔍</a>
+            <a href="#" class="icon-btn">🛒</a>
+            <a href="signin.html" class="btn btn-green active">Sign In</a>
+        </div>
+    </div>
+</header>
+
+<!-- AUTH PAGE -->
+<div class="auth-page">
+
+    <!-- LEFT -->
+    <div class="auth-left">
+        <div class="auth-left-content">
+            <h2>Welcome to<br><span>FoodI</span></h2>
+            <p>Join thousands of food lovers who get the freshest meals delivered to their doorstep every day.</p>
+
+            <ul class="feature-list">
+                <li>
+                    <div class="feat-icon">🚀</div>
+                    Express delivery under 30 minutes
+                </li>
+                <li>
+                    <div class="feat-icon">🥗</div>
+                    200+ fresh menu items daily
+                </li>
+                <li>
+                    <div class="feat-icon">⭐</div>
+                    Exclusive member discounts & offers
+                </li>
+                <li>
+                    <div class="feat-icon">🎉</div>
+                    Real-time order tracking
+                </li>
+            </ul>
+
+            <div class="auth-food-img">
+                <img src="./img/big-burger.png" alt="Food">
+            </div>
+        </div>
+    </div>
+
+    <!-- RIGHT -->
+    <div class="auth-right">
+
+        <!-- TABS -->
+        <div class="auth-tabs">
+            <button class="auth-tab active" data-tab="signin">Sign In</button>
+            <button class="auth-tab" data-tab="signup">Create Account</button>
+        </div>
+
+        <!-- SIGN IN FORM -->
+        <div class="auth-form visible" id="signin-form">
+            <div>
+                <h2 class="form-title">Welcome back 👋</h2>
+                <p class="form-subtitle">Enter your credentials to access your account</p>
+            </div>
+
+            <div class="social-btns">
+                <button class="social-btn">
+                    <span class="s-icon">🔵</span> Google
+                </button>
+                <button class="social-btn">
+                    <span class="s-icon">🍎</span> Apple
+                </button>
+            </div>
+
+            <div class="divider">or continue with email</div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="you@example.com">
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="signin-pass" placeholder="Enter your password">
+                    <button class="eye-toggle" onclick="togglePass('signin-pass', this)">👁</button>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <label class="remember-label">
+                    <input type="checkbox"> Remember me
+                </label>
+                <a href="#" class="forgot-link">Forgot password?</a>
+            </div>
+
+            <button class="submit-btn" onclick="handleSignIn()">Sign In →</button>
+
+            <div class="success-msg" id="signin-success">
+                <div class="success-icon">✅</div>
+                <h3>Welcome back!</h3>
+                <p>You're signed in successfully. Redirecting...</p>
+            </div>
+        </div>
+
+        <!-- SIGN UP FORM -->
+        <div class="auth-form" id="signup-form">
+            <div>
+                <h2 class="form-title">Create account 🍽️</h2>
+                <p class="form-subtitle">Join FoodI and start ordering in minutes</p>
+            </div>
+
+            <div class="social-btns">
+                <button class="social-btn">
+                    <span class="s-icon">🔵</span> Google
+                </button>
+                <button class="social-btn">
+                    <span class="s-icon">🍎</span> Apple
+                </button>
+            </div>
+
+            <div class="divider">or sign up with email</div>
+
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" placeholder="John Doe">
+            </div>
+
+            <div class="form-group">
+                <label>Email Address</label>
+                <input type="email" placeholder="you@example.com">
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="signup-pass" placeholder="Min. 8 characters">
+                    <button class="eye-toggle" onclick="togglePass('signup-pass', this)">👁</button>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Confirm Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="confirm-pass" placeholder="Repeat your password">
+                    <button class="eye-toggle" onclick="togglePass('confirm-pass', this)">👁</button>
+                </div>
+            </div>
+
+            <button class="submit-btn" onclick="handleSignUp()">Create Account →</button>
+
+            <div class="success-msg" id="signup-success">
+                <div class="success-icon">🎉</div>
+                <h3>Account Created!</h3>
+                <p>Welcome to FoodI! Your account is ready.</p>
+            </div>
+
+            <p class="terms-text">
+                By signing up you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+            </p>
+        </div>
+
+    </div><!-- /auth-right -->
+</div><!-- /auth-page -->
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Foodtrack</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Commodo libero viverra dapibus odio.</p>
+                <div class="footer-input">
+                    <input type="text" placeholder="Your Email">
+                    <button>→</button>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Contact us</h4>
+                <div class="contact-item">📍 1234 Street Name, City Name</div>
+                <div class="contact-item">📞 +0123-456789</div>
+                <div class="contact-item">✉️ info@foodtrack.com</div>
+                <div class="contact-item">🕐 Sun - Sat / 10:00 AM - 8:00 PM</div>
+            </div>
+            <div class="footer-col">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="menu.html">Our Menu</a></li>
+                    <li><a href="#">Team</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Instagram Gallery</h4>
+                <div class="instagram-grid">
+                    <img src="./img/in-1.jpg" alt="">
+                    <img src="./img/in-2.jpg" alt="">
+                    <img src="./img/in-3.jpg" alt="">
+                    <img src="./img/in-4.jpg" alt="">
+                    <img src="./img/in-5.jpg" alt="">
+                    <img src="./img/in-6.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <span>© 2024 Foodtrack. All rights reserved.</span>
+            <div>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // ── Tab switching
+    document.querySelectorAll('.auth-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('visible'));
+            tab.classList.add('active');
+            document.getElementById(tab.dataset.tab + '-form').classList.add('visible');
+        });
+    });
+
+    // ── Password toggle
+    function togglePass(id, btn) {
+        const input = document.getElementById(id);
+        if (input.type === 'password') {
+            input.type = 'text';
+            btn.textContent = '🙈';
+        } else {
+            input.type = 'password';
+            btn.textContent = '👁';
+        }
+    }
+
+    // ── Sign In submit
+    function handleSignIn() {
+        const btn = document.querySelector('#signin-form .submit-btn');
+        btn.textContent = 'Signing in...';
+        btn.style.opacity = '0.75';
+        setTimeout(() => {
+            btn.style.display = 'none';
+            document.getElementById('signin-success').style.display = 'flex';
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 2000);
+        }, 1200);
+    }
+
+    // ── Sign Up submit
+    function handleSignUp() {
+        const btn = document.querySelector('#signup-form .submit-btn');
+        btn.textContent = 'Creating account...';
+        btn.style.opacity = '0.75';
+        setTimeout(() => {
+            btn.style.display = 'none';
+            document.getElementById('signup-success').style.display = 'flex';
+        }, 1200);
+    }
+</script>
+</body>
+</html>

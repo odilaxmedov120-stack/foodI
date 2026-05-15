@@ -1,0 +1,1705 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop — FoodI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --green: #22C55E;
+            --green-dark: #16A34A;
+            --green-light: #DCFCE7;
+            --dark: #111827;
+            --gray: #6B7280;
+            --light: #F9FAFB;
+            --white: #ffffff;
+            --shadow: 0 8px 30px rgba(0,0,0,0.08);
+            --shadow-hover: 0 20px 60px rgba(34,197,94,0.22);
+            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        body {
+            font-family: 'DM Sans', sans-serif;
+            color: var(--dark);
+            background: var(--light);
+            overflow-x: hidden;
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* ── HEADER ── */
+        .header {
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(34,197,94,0.1);
+            transition: box-shadow 0.3s;
+        }
+        
+        .header:hover {
+            box-shadow: 0 4px 30px rgba(0,0,0,0.06);
+        }
+        
+        .header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 900;
+            color: var(--green);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .logo:hover {
+            letter-spacing: 2px;
+            color: var(--green-dark);
+        }
+        
+        .nav {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .nav a {
+            padding: 8px 16px;
+            font-weight: 500;
+            border-radius: 8px;
+            position: relative;
+            transition: var(--transition);
+            color: var(--dark);
+        }
+        
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 4px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: var(--green);
+            border-radius: 2px;
+            transition: width 0.3s ease;
+        }
+        
+        .nav a:hover,
+        .nav a.active {
+            color: var(--green);
+            background: var(--green-light);
+        }
+        
+        .nav a:hover::after,
+        .nav a.active::after {
+            width: 50%;
+        }
+        
+        .header-btns {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px solid #E5E7EB;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+            background: white;
+            position: relative;
+        }
+        
+        .icon-btn:hover {
+            border-color: var(--green);
+            background: var(--green-light);
+            transform: scale(1.1);
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 18px;
+            height: 18px;
+            background: var(--green);
+            color: white;
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .icon-btn:hover .cart-count {
+            transform: scale(1.2);
+            background: var(--green-dark);
+        }
+        
+        .btn {
+            padding: 11px 26px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 15px;
+            transition: var(--transition);
+            display: inline-block;
+        }
+        
+        .btn-green {
+            background: var(--green);
+            color: white;
+            box-shadow: 0 4px 15px rgba(34,197,94,0.3);
+        }
+        
+        .btn-green:hover {
+            background: var(--green-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(34,197,94,0.4);
+        }
+        
+        /* ── HERO ── */
+        .shop-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .shop-hero::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            left: -80px;
+            width: 350px;
+            height: 350px;
+            background: radial-gradient(circle, rgba(34,197,94,0.18), transparent 70%);
+            border-radius: 50%;
+            animation: glow 4s ease-in-out infinite;
+        }
+        
+        .shop-hero::after {
+            content: '';
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 450px;
+            height: 450px;
+            background: radial-gradient(circle, rgba(34,197,94,0.1), transparent 70%);
+            border-radius: 50%;
+            animation: glow 4s ease-in-out infinite 2s;
+        }
+        
+        @keyframes glow {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.7; }
+        }
+        
+        .shop-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 58px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+            line-height: 1.2;
+        }
+        
+        .shop-hero h1 span {
+            color: var(--green);
+        }
+        
+        .shop-hero p {
+            color: #94a3b8;
+            font-size: 17px;
+            max-width: 480px;
+            margin: 0 auto 28px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .breadcrumb {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 13px;
+            color: #94a3b8;
+            position: relative;
+            z-index: 1;
+            transition: var(--transition);
+        }
+        
+        .breadcrumb:hover {
+            background: rgba(34,197,94,0.12);
+            border-color: rgba(34,197,94,0.3);
+            color: #d1fae5;
+        }
+        
+        .breadcrumb a {
+            color: var(--green);
+            transition: color 0.3s;
+        }
+        
+        .breadcrumb a:hover {
+            color: #86efac;
+        }
+        
+        /* ── PROMO BANNERS ── */
+        .promo-section {
+            padding: 50px 0 10px;
+        }
+        
+        .promo-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 20px;
+        }
+        
+        .promo-card {
+            border-radius: 22px;
+            padding: 40px 44px;
+            position: relative;
+            overflow: hidden;
+            transition: var(--transition);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .promo-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .promo-card.big {
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+            color: white;
+            min-height: 200px;
+        }
+        
+        .promo-card.small-top {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            min-height: 90px;
+            padding: 28px 34px;
+        }
+        
+        .promo-card.small-bot {
+            background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+            color: white;
+            min-height: 90px;
+            padding: 28px 34px;
+        }
+        
+        .promo-small-col {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .promo-card::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 180px;
+            height: 180px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+        
+        .promo-card:hover::before {
+            transform: scale(1.3);
+        }
+        
+        .promo-tag {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            opacity: 0.8;
+            margin-bottom: 8px;
+        }
+        
+        .promo-card h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .promo-card.small-top h3,
+        .promo-card.small-bot h3 {
+            font-size: 20px;
+            margin-bottom: 6px;
+        }
+        
+        .promo-card p {
+            font-size: 14px;
+            opacity: 0.85;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .promo-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            font-size: 14px;
+            color: white;
+            position: relative;
+            z-index: 1;
+            transition: gap 0.3s;
+        }
+        
+        .promo-card:hover .promo-link {
+            gap: 12px;
+        }
+        
+        /* ── SHOP LAYOUT ── */
+        .shop-section {
+            padding: 50px 0 90px;
+        }
+        
+        .shop-layout {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            gap: 32px;
+            align-items: start;
+        }
+        
+        /* ── SIDEBAR ── */
+        .sidebar {
+            background: white;
+            border-radius: 22px;
+            padding: 28px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 100px;
+        }
+        
+        .sidebar-section {
+            margin-bottom: 30px;
+            padding-bottom: 30px;
+            border-bottom: 1px solid #F3F4F6;
+        }
+        
+        .sidebar-section:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .sidebar-title {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        /* Category list */
+        .cat-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        
+        .cat-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        
+        .cat-list li:hover {
+            background: var(--green-light);
+            color: var(--green-dark);
+            transform: translateX(4px);
+        }
+        
+        .cat-list li.active {
+            background: var(--green);
+            color: white;
+            border-color: var(--green);
+        }
+        
+        .cat-list li .cat-count {
+            font-size: 12px;
+            background: rgba(0,0,0,0.08);
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-weight: 700;
+        }
+        
+        .cat-list li.active .cat-count {
+            background: rgba(255,255,255,0.25);
+        }
+        
+        /* Price range */
+        .price-range-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .price-slider {
+            width: 100%;
+            accent-color: var(--green);
+            cursor: pointer;
+        }
+        
+        .price-labels {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            color: var(--gray);
+            font-weight: 600;
+        }
+        
+        /* Rating filter */
+        .rating-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .rating-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        
+        .rating-list li:hover {
+            background: var(--green-light);
+            color: var(--green-dark);
+            transform: translateX(4px);
+        }
+        
+        .rating-list li input {
+            accent-color: var(--green);
+            cursor: pointer;
+        }
+        
+        .stars {
+            color: #F59E0B;
+            font-size: 13px;
+        }
+        
+        /* Clear btn */
+        .clear-btn {
+            width: 100%;
+            padding: 11px;
+            border: 2px solid #E5E7EB;
+            border-radius: 10px;
+            background: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--gray);
+            transition: var(--transition);
+        }
+        
+        .clear-btn:hover {
+            border-color: var(--green);
+            color: var(--green-dark);
+            background: var(--green-light);
+            transform: translateY(-2px);
+        }
+        
+        /* ── PRODUCTS AREA ── */
+        .products-area {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        /* Top bar */
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 16px 22px;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+        }
+        
+        .topbar-left {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        .topbar-left span {
+            color: var(--dark);
+            font-weight: 700;
+        }
+        
+        .topbar-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .sort-select {
+            padding: 8px 14px;
+            border: 1.5px solid #E5E7EB;
+            border-radius: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            color: var(--dark);
+            cursor: pointer;
+            transition: var(--transition);
+            outline: none;
+            background: white;
+        }
+        
+        .sort-select:hover,
+        .sort-select:focus {
+            border-color: var(--green);
+        }
+        
+        .view-btns {
+            display: flex;
+            gap: 6px;
+        }
+        
+        .view-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            border: 1.5px solid #E5E7EB;
+            background: white;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            transition: var(--transition);
+        }
+        
+        .view-btn:hover {
+            border-color: var(--green);
+            background: var(--green-light);
+            transform: scale(1.1);
+        }
+        
+        .view-btn.active {
+            background: var(--green);
+            border-color: var(--green);
+            color: white;
+        }
+        
+        /* ── PRODUCT GRID ── */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+        
+        .products-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+        
+        /* ── PRODUCT CARD ── */
+        .product-card {
+            background: white;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            border: 2px solid transparent;
+            transition: var(--transition);
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--green);
+        }
+        
+        /* Badges */
+        .p-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 4px 11px;
+            border-radius: 20px;
+            z-index: 3;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+        }
+        
+        .product-card:hover .p-badge {
+            transform: scale(1.1);
+        }
+        
+        .badge-sale    { background: #EF4444; }
+        .badge-new     { background: #8B5CF6; }
+        .badge-hot     { background: #F59E0B; }
+        .badge-best    { background: var(--green); }
+        
+        /* Wishlist */
+        .wishlist-btn {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            width: 34px;
+            height: 34px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            z-index: 3;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: var(--transition);
+        }
+        
+        .wishlist-btn:hover {
+            background: #FEE2E2;
+            transform: scale(1.2);
+        }
+        
+        .wishlist-btn.liked {
+            background: #FEE2E2;
+        }
+        
+        /* Image */
+        .p-img {
+            width: 100%;
+            height: 190px;
+            background: #F3F4F6;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .p-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.55s ease;
+        }
+        
+        .product-card:hover .p-img img {
+            transform: scale(1.1);
+        }
+        
+        .p-overlay {
+            position: absolute;
+            inset: 0;
+            background: rgba(17,24,39,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            opacity: 0;
+            transition: opacity 0.35s;
+            z-index: 2;
+        }
+        
+        .product-card:hover .p-overlay {
+            opacity: 1;
+        }
+        
+        .overlay-btn {
+            background: white;
+            border: none;
+            border-radius: 10px;
+            padding: 8px 16px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+            transform: translateY(10px);
+        }
+        
+        .product-card:hover .overlay-btn {
+            transform: translateY(0);
+        }
+        
+        .overlay-btn:hover {
+            background: var(--green);
+            color: white;
+        }
+        
+        /* Body */
+        .p-body {
+            padding: 16px;
+        }
+        
+        .p-cat {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--green);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 6px;
+        }
+        
+        .p-body h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            transition: color 0.3s;
+        }
+        
+        .product-card:hover .p-body h3 {
+            color: var(--green-dark);
+        }
+        
+        .p-stars {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+            margin-bottom: 12px;
+            font-size: 12px;
+            color: #F59E0B;
+        }
+        
+        .p-stars span {
+            color: var(--gray);
+            margin-left: 4px;
+            font-size: 11px;
+        }
+        
+        .p-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .p-price-wrap {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .p-price {
+            font-size: 19px;
+            font-weight: 800;
+            color: var(--green-dark);
+            transition: var(--transition);
+        }
+        
+        .product-card:hover .p-price {
+            transform: scale(1.06);
+        }
+        
+        .p-old-price {
+            font-size: 12px;
+            color: #9CA3AF;
+            text-decoration: line-through;
+        }
+        
+        .add-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 11px;
+            background: var(--green);
+            color: white;
+            border: none;
+            font-size: 22px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            font-family: 'DM Sans', sans-serif;
+            line-height: 1;
+        }
+        
+        .add-btn:hover {
+            background: var(--green-dark);
+            transform: rotate(90deg) scale(1.2);
+            box-shadow: 0 6px 20px rgba(34,197,94,0.45);
+        }
+        
+        /* ── LIST VIEW CARD ── */
+        .products-grid.list-view .product-card {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+        }
+        
+        .products-grid.list-view .p-img {
+            height: 100%;
+            min-height: 160px;
+        }
+        
+        .products-grid.list-view .p-body {
+            padding: 20px 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .products-grid.list-view .product-card:hover {
+            transform: translateY(-6px) scale(1.01);
+        }
+        
+        /* ── PAGINATION ── */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            border: 2px solid #E5E7EB;
+            background: white;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .page-btn:hover {
+            border-color: var(--green);
+            color: var(--green);
+            transform: translateY(-2px);
+        }
+        
+        .page-btn.active {
+            background: var(--green);
+            border-color: var(--green);
+            color: white;
+            box-shadow: 0 4px 15px rgba(34,197,94,0.35);
+        }
+        
+        /* ── NEWSLETTER ── */
+        .newsletter-section {
+            padding: 0 0 90px;
+        }
+        
+        .newsletter-box {
+            background: linear-gradient(135deg, #1F2937 0%, #111827 100%);
+            border-radius: 24px;
+            padding: 50px 60px;
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            color: white;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        
+        .newsletter-box:hover {
+            border-color: var(--green);
+            box-shadow: 0 20px 60px rgba(34,197,94,0.18);
+            transform: translateY(-4px);
+        }
+        
+        .newsletter-box img {
+            width: 200px;
+            height: 160px;
+            background: #374151;
+            border-radius: 16px;
+            object-fit: cover;
+            flex-shrink: 0;
+            transition: var(--transition);
+        }
+        
+        .newsletter-box:hover img {
+            transform: scale(1.05) rotate(-2deg);
+        }
+        
+        .newsletter-text {
+            flex: 1;
+        }
+        
+        .newsletter-text h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .newsletter-text p {
+            color: #9CA3AF;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .subscribe-box {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .subscribe-box input {
+            flex: 1;
+            padding: 13px 20px;
+            border-radius: 10px;
+            border: 2px solid transparent;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            transition: var(--transition);
+            outline: none;
+        }
+        
+        .subscribe-box input:focus {
+            border-color: var(--green);
+            box-shadow: 0 0 0 4px rgba(34,197,94,0.15);
+        }
+        
+        /* ── FOOTER ── */
+        .footer {
+            background: #F3F4F6;
+            padding: 60px 0 0;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-col h4 {
+            margin-bottom: 18px;
+            font-size: 17px;
+            font-weight: 700;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .footer-col p {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-col ul li a {
+            color: var(--gray);
+            font-size: 14px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+            padding: 3px 0;
+        }
+        
+        .footer-col ul li a::before {
+            content: '›';
+            color: var(--green);
+            font-size: 18px;
+            transform: translateX(-4px);
+            opacity: 0;
+            transition: var(--transition);
+        }
+        
+        .footer-col ul li a:hover {
+            color: var(--green-dark);
+            transform: translateX(6px);
+        }
+        
+        .footer-col ul li a:hover::before {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .footer-input {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+        }
+        
+        .footer-input input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1.5px solid #D1D5DB;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 13px;
+            transition: var(--transition);
+        }
+        
+        .footer-input input:focus {
+            outline: none;
+            border-color: var(--green);
+        }
+        
+        .footer-input button {
+            background: var(--green);
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 15px;
+            transition: var(--transition);
+        }
+        
+        .footer-input button:hover {
+            background: var(--green-dark);
+            transform: translateX(3px);
+        }
+        
+        .contact-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+            color: var(--gray);
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: var(--transition);
+            cursor: default;
+        }
+        
+        .contact-item:hover {
+            background: white;
+            color: var(--dark);
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+        
+        .instagram-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+        
+        .instagram-grid img {
+            width: 100%;
+            height: 70px;
+            background: #E5E7EB;
+            border-radius: 10px;
+            object-fit: cover;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        
+        .instagram-grid img:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 20px rgba(34,197,94,0.25);
+            filter: brightness(1.05) saturate(1.2);
+        }
+        
+        .footer-bottom {
+            background: var(--green);
+            color: white;
+            padding: 20px 0;
+            font-size: 14px;
+        }
+        
+        .footer-bottom .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-bottom a {
+            margin: 0 10px;
+            opacity: 0.85;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-bottom a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+        
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        
+        .product-card {
+            animation: fadeUp 0.45s ease both;
+        }
+        
+        .products-grid .product-card:nth-child(2) { animation-delay: 0.06s; }
+        .products-grid .product-card:nth-child(3) { animation-delay: 0.12s; }
+        .products-grid .product-card:nth-child(4) { animation-delay: 0.18s; }
+        .products-grid .product-card:nth-child(5) { animation-delay: 0.24s; }
+        .products-grid .product-card:nth-child(6) { animation-delay: 0.30s; }
+    </style>
+</head>
+<body>
+    
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container">
+            <a href="index.html" class="logo">FoodI</a>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="menu.html">Menu</a>
+                <a href="service.html">Service</a>
+                <a href="shop.html" class="active">Shop</a>
+            </nav>
+            <div class="header-btns">
+                <a href="#" class="icon-btn">🔍</a>
+                <a href="#" class="icon-btn">
+                    🛒
+                    <span class="cart-count" id="cartCount">0</span>
+                </a>
+                <a href="signin.html" class="btn btn-green">Sign In</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- HERO -->
+    <section class="shop-hero">
+        <div class="container">
+            <h1>Our <span>Shop</span></h1>
+            <p>Premium food products, ingredients, and kitchen essentials — delivered fresh to your door</p>
+            <div class="breadcrumb">
+                <a href="index.html">Home</a> › Shop
+            </div>
+        </div>
+    </section>
+    
+    <!-- PROMO BANNERS -->
+    <section class="promo-section">
+        <div class="container">
+            <div class="promo-grid">
+                <div class="promo-card big">
+                    <div class="promo-tag">Limited Time</div>
+                    <h3>Fresh Organic<br>Bundles — 30% Off</h3>
+                    <p>Hand-picked seasonal ingredients sourced directly from local farms. Order today and save big.</p>
+                    <a href="#" class="promo-link">Shop Now →</a>
+                </div>
+                <div class="promo-small-col">
+                    <div class="promo-card small-top">
+                        <div class="promo-tag">New Arrivals</div>
+                        <h3>Spice Collections</h3>
+                        <a href="#" class="promo-link">Explore →</a>
+                    </div>
+                    <div class="promo-card small-bot">
+                        <div class="promo-tag">Best Seller</div>
+                        <h3>Premium Sauces</h3>
+                        <a href="#" class="promo-link">Shop →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- SHOP SECTION -->
+    <section class="shop-section">
+        <div class="container">
+            <div class="shop-layout">
+                
+                <!-- SIDEBAR -->
+                <aside class="sidebar">
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">🗂️ Categories</div>
+                        <ul class="cat-list">
+                            <li class="active" onclick="filterCat(this, 'all')">
+                                All Products <span class="cat-count">24</span>
+                            </li>
+                            <li onclick="filterCat(this, 'organic')">
+                                Organic <span class="cat-count">8</span>
+                            </li>
+                            <li onclick="filterCat(this, 'sauces')">
+                                Sauces <span class="cat-count">5</span>
+                            </li>
+                            <li onclick="filterCat(this, 'spices')">
+                                Spices <span class="cat-count">6</span>
+                            </li>
+                            <li onclick="filterCat(this, 'snacks')">
+                                Snacks <span class="cat-count">5</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">💰 Price Range</div>
+                        <div class="price-range-wrap">
+                            <input type="range" class="price-slider" min="0" max="100" value="60" id="priceSlider" oninput="updatePrice(this.value)">
+                            <div class="price-labels">
+                                <span>$0</span>
+                                <span id="priceVal">Up to $60</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="sidebar-section">
+                        <div class="sidebar-title">⭐ Rating</div>
+                        <ul class="rating-list">
+                            <li><input type="radio" name="rating"> <span class="stars">★★★★★</span> 5 stars</li>
+                            <li><input type="radio" name="rating"> <span class="stars">★★★★☆</span> 4+ stars</li>
+                            <li><input type="radio" name="rating"> <span class="stars">★★★☆☆</span> 3+ stars</li>
+                        </ul>
+                    </div>
+                    
+                    <button class="clear-btn">Clear Filters</button>
+                </aside>
+                
+                <!-- PRODUCTS -->
+                <div class="products-area">
+                    
+                    <!-- TOP BAR -->
+                    <div class="topbar">
+                        <div class="topbar-left">
+                            Showing <span>12</span> of <span>24</span> products
+                        </div>
+                        <div class="topbar-right">
+                            <select class="sort-select">
+                                <option>Sort: Featured</option>
+                                <option>Price: Low to High</option>
+                                <option>Price: High to Low</option>
+                                <option>Best Rating</option>
+                                <option>Newest</option>
+                            </select>
+                            <div class="view-btns">
+                                <button class="view-btn active" id="gridBtn" onclick="setView('grid')">⊞</button>
+                                <button class="view-btn" id="listBtn" onclick="setView('list')">☰</button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- GRID -->
+                    <div class="products-grid" id="productsGrid">
+                        
+                        <div class="product-card" data-cat="organic">
+                            <span class="p-badge badge-best">Best Seller</span>
+                            <button class="wishlist-btn" onclick="toggleWish(this)">🤍</button>
+                            <div class="p-img">
+                                <img src="./img/salad.jpg" alt="Organic Greens">
+                                <div class="p-overlay">
+                                    <button class="overlay-btn">👁 View</button>
+                                    <button class="overlay-btn" onclick="addToCart(event)">🛒 Add</button>
+                                </div>
+                            </div>
+                            <div class="p-body">
+                                <div class="p-cat">Organic</div>
+                                <h3>Fresh Organic Greens Bundle</h3>
+                                <div class="p-stars">★★★★★ <span>(142)</span></div>
+                                <div class="p-footer">
+                                    <div class="p-price-wrap">
+                                        <span class="p-price">$12.99</span>
+                                        <span class="p-old-price">$18.00</span>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart(event)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-card" data-cat="sauces">
+                            <span class="p-badge badge-hot">Hot 🔥</span>
+                            <button class="wishlist-btn" onclick="toggleWish(this)">🤍</button>
+                            <div class="p-img">
+                                <img src="./img/beef.jpg" alt="BBQ Sauce">
+                                <div class="p-overlay">
+                                    <button class="overlay-btn">👁 View</button>
+                                    <button class="overlay-btn" onclick="addToCart(event)">🛒 Add</button>
+                                </div>
+                            </div>
+                            <div class="p-body">
+                                <div class="p-cat">Sauces</div>
+                                <h3>Smoky BBQ House Sauce</h3>
+                                <div class="p-stars">★★★★★ <span>(98)</span></div>
+                                <div class="p-footer">
+                                    <div class="p-price-wrap">
+                                        <span class="p-price">$8.50</span>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart(event)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-card" data-cat="spices">
+                            <span class="p-badge badge-new">New</span>
+                            <button class="wishlist-btn" onclick="toggleWish(this)">🤍</button>
+                            <div class="p-img">
+                                <img src="./img/gyra.jpg" alt="Spice Set">
+                                <div class="p-overlay">
+                                    <button class="overlay-btn">👁 View</button>
+                                    <button class="overlay-btn" onclick="addToCart(event)">🛒 Add</button>
+                                </div>
+                            </div>
+                            <div class="p-body">
+                                <div class="p-cat">Spices</div>
+                                <h3>World Spice Collection (12 jars)</h3>
+                                <div class="p-stars">★★★★☆ <span>(67)</span></div>
+                                <div class="p-footer">
+                                    <div class="p-price-wrap">
+                                        <span class="p-price">$24.99</span>
+                                        <span class="p-old-price">$32.00</span>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart(event)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-card" data-cat="snacks">
+                            <button class="wishlist-btn" onclick="toggleWish(this)">🤍</button>
+                            <div class="p-img">
+                                <img src="./img/chicken.jpg" alt="Snack Box">
+                                <div class="p-overlay">
+                                    <button class="overlay-btn">👁 View</button>
+                                    <button class="overlay-btn" onclick="addToCart(event)">🛒 Add</button>
+                                </div>
+                            </div>
+                            <div class="p-body">
+                                <div class="p-cat">Snacks</div>
+                                <h3>Gourmet Snack Box (20 items)</h3>
+                                <div class="p-stars">★★★★★ <span>(211)</span></div>
+                                <div class="p-footer">
+                                    <div class="p-price-wrap">
+                                        <span class="p-price">$19.99</span>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart(event)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-card" data-cat="organic">
+                            <span class="p-badge badge-sale">Sale</span>
+                            <button class="wishlist-btn" onclick="toggleWish(this)">🤍</button>
+                            <div class="p-img">
+                                <img src="./img/enchilado.jpg" alt="Organic Fruits">
+                                <div class="p-overlay">
+                                    <button class="overlay-btn">👁 View</button>
+                                    <button class="overlay-btn" onclick="addToCart(event)">🛒 Add</button>
+                                </div>
+                            </div>
+                            <div class="p-body">
+                                <div class="p-cat">Organic</div>
+                                <h3>Seasonal Fruit Basket</h3>
+                                <div class="p-stars">★★★★☆ <span>(55)</span></div>
+                                <div class="p-footer">
+                                    <div class="p-price-wrap">
+                                        <span class="p-price">$15.99</span>
+                                        <span class="p-old-price">$22.00</span>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart(event)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-card" data-cat="sauces">
+                            <span class="p-badge badge-new">New</span>
+                            <button class="wishlist-btn" onclick="toggleWish(this)">🤍</button>
+                            <div class="p-img">
+                                <img src="./img/pizza2.jpg" alt="Hot Sauce">
+                                <div class="p-overlay">
+                                    <button class="overlay-btn">👁 View</button>
+                                    <button class="overlay-btn" onclick="addToCart(event)">🛒 Add</button>
+                                </div>
+                            </div>
+                            <div class="p-body">
+                                <div class="p-cat">Sauces</div>
+                                <h3>Artisan Hot Sauce Trio</h3>
+                                <div class="p-stars">★★★★★ <span>(89)</span></div>
+                                <div class="p-footer">
+                                    <div class="p-price-wrap">
+                                        <span class="p-price">$14.50</span>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart(event)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-card" data-cat="spices">
+                            <span class="p-badge badge-best">Best Seller</span>
+                            <button class="wishlist-btn" onclick="toggleWish(this)">🤍</button>
+                            <div class="p-img">
+                                <img src="./img/gyra.jpg" alt="Herb Set">
+                                <div class="p-overlay">
+                                    <button class="overlay-btn">👁 View</button>
+                                    <button class="overlay-btn" onclick="addToCart(event)">🛒 Add</button>
+                                </div>
+                            </div>
+                            <div class="p-body">
+                                <div class="p-cat">Spices</div>
+                                <h3>Dried Herb Garden Set</h3>
+                                <div class="p-stars">★★★★★ <span>(174)</span></div>
+                                <div class="p-footer">
+                                    <div class="p-price-wrap">
+                                        <span class="p-price">$11.99</span>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart(event)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-card" data-cat="snacks">
+                            <button class="wishlist-btn" onclick="toggleWish(this)">🤍</button>
+                            <div class="p-img">
+                                <img src="./img/cake.png" alt="Cookie Box">
+                                <div class="p-overlay">
+                                    <button class="overlay-btn">👁 View</button>
+                                    <button class="overlay-btn" onclick="addToCart(event)">🛒 Add</button>
+                                </div>
+                            </div>
+                            <div class="p-body">
+                                <div class="p-cat">Snacks</div>
+                                <h3>Artisan Cookie Assortment</h3>
+                                <div class="p-stars">★★★★☆ <span>(43)</span></div>
+                                <div class="p-footer">
+                                    <div class="p-price-wrap">
+                                        <span class="p-price">$9.99</span>
+                                        <span class="p-old-price">$13.00</span>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart(event)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-card" data-cat="organic">
+                            <span class="p-badge badge-hot">Hot 🔥</span>
+                            <button class="wishlist-btn" onclick="toggleWish(this)">🤍</button>
+                            <div class="p-img">
+                                <img src="./img/salad.jpg" alt="Veggie Box">
+                                <div class="p-overlay">
+                                    <button class="overlay-btn">👁 View</button>
+                                    <button class="overlay-btn" onclick="addToCart(event)">🛒 Add</button>
+                                </div>
+                            </div>
+                            <div class="p-body">
+                                <div class="p-cat">Organic</div>
+                                <h3>Weekly Veggie Box</h3>
+                                <div class="p-stars">★★★★★ <span>(302)</span></div>
+                                <div class="p-footer">
+                                    <div class="p-price-wrap">
+                                        <span class="p-price">$29.99</span>
+                                    </div>
+                                    <button class="add-btn" onclick="addToCart(event)">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    <!-- PAGINATION -->
+                    <div class="pagination">
+                        <button class="page-btn active">1</button>
+                        <button class="page-btn">2</button>
+                        <button class="page-btn">3</button>
+                        <button class="page-btn">›</button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- NEWSLETTER -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-box">
+                <img src="./img/big-burger.png" alt="Promo">
+                <div class="newsletter-text">
+                    <h3>Subscribe & Get 10% Off</h3>
+                    <p>Be the first to know about new products, exclusive deals, and seasonal offers.</p>
+                    <div class="subscribe-box">
+                        <input type="text" placeholder="Type your email...">
+                        <button class="btn btn-green">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>Foodtrack</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Commodo libero viverra dapibus odio.</p>
+                    <div class="footer-input">
+                        <input type="text" placeholder="Your Email">
+                        <button>→</button>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4>Contact us</h4>
+                    <div class="contact-item">📍 1234 Street Name, City Name</div>
+                    <div class="contact-item">📞 +0123-456789</div>
+                    <div class="contact-item">✉️ info@foodtrack.com</div>
+                    <div class="contact-item">🕐 Sun - Sat / 10:00 AM - 8:00 PM</div>
+                </div>
+                <div class="footer-col">
+                    <h4>Links</h4>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="menu.html">Our Menu</a></li>
+                        <li><a href="#">Team</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>Instagram Gallery</h4>
+                    <div class="instagram-grid">
+                        <img src="./img/in-1.jpg" alt="">
+                        <img src="./img/in-2.jpg" alt="">
+                        <img src="./img/in-3.jpg" alt="">
+                        <img src="./img/in-4.jpg" alt="">
+                        <img src="./img/in-5.jpg" alt="">
+                        <img src="./img/in-6.jpg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container">
+                <span>© 2024 Foodtrack. All rights reserved.</span>
+                <div>
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // ── Cart counter
+        let cartItems = 0;
+        
+        function addToCart(e) {
+            e.stopPropagation();
+            const btn = e.currentTarget;
+            const orig = btn.textContent;
+            btn.textContent = '✓';
+            btn.style.background = '#16A34A';
+            cartItems++;
+            document.getElementById('cartCount').textContent = cartItems;
+            document.getElementById('cartCount').style.transform = 'scale(1.4)';
+            setTimeout(() => {
+                document.getElementById('cartCount').style.transform = 'scale(1)';
+            }, 300);
+            setTimeout(() => {
+                btn.textContent = orig;
+                btn.style.background = '';
+            }, 1200);
+        }
+        
+        // ── Wishlist toggle
+        function toggleWish(btn) {
+            btn.classList.toggle('liked');
+            btn.textContent = btn.classList.contains('liked') ? '❤️' : '🤍';
+            btn.style.transform = 'scale(1.4)';
+            setTimeout(() => { btn.style.transform = ''; }, 300);
+        }
+        
+        // ── Category filter
+        function filterCat(el, cat) {
+            document.querySelectorAll('.cat-list li').forEach(li => li.classList.remove('active'));
+            el.classList.add('active');
+            document.querySelectorAll('.product-card').forEach(card => {
+                if (cat === 'all' || card.dataset.cat === cat) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+        
+        // ── Price slider
+        function updatePrice(val) {
+            document.getElementById('priceVal').textContent = 'Up to $' + val;
+        }
+        
+        // ── Grid / List view toggle
+        function setView(mode) {
+            const grid = document.getElementById('productsGrid');
+            const gridBtn = document.getElementById('gridBtn');
+            const listBtn = document.getElementById('listBtn');
+            if (mode === 'list') {
+                grid.classList.add('list-view');
+                listBtn.classList.add('active');
+                gridBtn.classList.remove('active');
+            } else {
+                grid.classList.remove('list-view');
+                gridBtn.classList.add('active');
+                listBtn.classList.remove('active');
+            }
+        }
+        
+        // ── Pagination
+        document.querySelectorAll('.page-btn').forEach(btn => {
+            btn.addEventListener('click', function () {
+                document.querySelectorAll('.page-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

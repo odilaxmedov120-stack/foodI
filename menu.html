@@ -1,0 +1,817 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu — FoodI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;600&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --green: #22C55E;
+            --green-dark: #16A34A;
+            --green-light: #DCFCE7;
+            --dark: #111827;
+            --gray: #6B7280;
+            --light: #F9FAFB;
+            --white: #ffffff;
+            --shadow: 0 8px 30px rgba(0,0,0,0.08);
+            --shadow-hover: 0 20px 60px rgba(34,197,94,0.22);
+            --transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body { font-family: 'DM Sans', sans-serif; color: var(--dark); background: var(--light); overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+        /* ── HEADER ── */
+        .header {
+            padding: 20px 0;
+            position: sticky; top: 0; z-index: 100;
+            background: rgba(255,255,255,0.96);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(34,197,94,0.1);
+            transition: box-shadow 0.3s;
+        }
+        .header:hover { box-shadow: 0 4px 30px rgba(0,0,0,0.06); }
+        .header .container { display: flex; justify-content: space-between; align-items: center; }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px; font-weight: 900; color: var(--green);
+            transition: var(--transition); cursor: pointer;
+        }
+        .logo:hover { letter-spacing: 2px; color: var(--green-dark); }
+
+        .nav { display: flex; gap: 5px; }
+        .nav a {
+            padding: 8px 16px; font-weight: 500; border-radius: 8px;
+            position: relative; transition: var(--transition); color: var(--dark);
+        }
+        .nav a::after {
+            content: ''; position: absolute;
+            bottom: 4px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 2px; background: var(--green);
+            border-radius: 2px; transition: width 0.3s ease;
+        }
+        .nav a:hover, .nav a.active { color: var(--green); background: var(--green-light); }
+        .nav a:hover::after, .nav a.active::after { width: 50%; }
+
+        .header-btns { display: flex; align-items: center; gap: 12px; }
+        .icon-btn {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            border: 1.5px solid #E5E7EB; cursor: pointer;
+            transition: var(--transition); font-size: 16px; background: white;
+        }
+        .icon-btn:hover { border-color: var(--green); background: var(--green-light); transform: scale(1.1); }
+        .btn {
+            padding: 11px 26px; border-radius: 10px; font-weight: 600; cursor: pointer;
+            border: none; font-family: 'DM Sans', sans-serif; font-size: 15px;
+            transition: var(--transition); display: inline-block;
+        }
+        .btn-green { background: var(--green); color: white; box-shadow: 0 4px 15px rgba(34,197,94,0.3); }
+        .btn-green:hover { background: var(--green-dark); transform: translateY(-3px); box-shadow: 0 10px 30px rgba(34,197,94,0.4); }
+
+        /* ── HERO BANNER ── */
+        .menu-hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white; padding: 80px 0; text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .menu-hero::before {
+            content: ''; position: absolute;
+            top: -80px; left: -80px; width: 350px; height: 350px;
+            background: radial-gradient(circle, rgba(34,197,94,0.18), transparent 70%);
+            border-radius: 50%; animation: glow 4s ease-in-out infinite;
+        }
+        .menu-hero::after {
+            content: ''; position: absolute;
+            bottom: -100px; right: -100px; width: 450px; height: 450px;
+            background: radial-gradient(circle, rgba(34,197,94,0.12), transparent 70%);
+            border-radius: 50%; animation: glow 4s ease-in-out infinite 2s;
+        }
+        @keyframes glow {
+            0%,100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.7; }
+        }
+        .menu-hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 58px; margin-bottom: 16px;
+            position: relative; z-index: 1; line-height: 1.2;
+        }
+        .menu-hero h1 span { color: var(--green); }
+        .menu-hero p {
+            color: #94a3b8; font-size: 17px;
+            max-width: 480px; margin: 0 auto 28px;
+            position: relative; z-index: 1;
+        }
+        .breadcrumb {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 8px 20px; border-radius: 30px;
+            font-size: 13px; color: #94a3b8;
+            position: relative; z-index: 1; transition: var(--transition);
+        }
+        .breadcrumb:hover { background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.3); color: #d1fae5; }
+        .breadcrumb a { color: var(--green); transition: color 0.3s; }
+        .breadcrumb a:hover { color: #86efac; }
+
+        /* ── FILTER TABS ── */
+        .filter-section { padding: 45px 0 20px; text-align: center; }
+        .filter-tabs {
+            display: inline-flex; gap: 8px;
+            background: white; padding: 8px; border-radius: 18px;
+            box-shadow: var(--shadow); flex-wrap: wrap; justify-content: center;
+        }
+        .filter-btn {
+            padding: 10px 24px; border-radius: 12px; border: none;
+            background: transparent; font-family: 'DM Sans', sans-serif;
+            font-weight: 600; font-size: 14px; cursor: pointer;
+            color: var(--gray); transition: var(--transition);
+            display: flex; align-items: center; gap: 6px;
+        }
+        .filter-btn:hover { background: var(--green-light); color: var(--green-dark); transform: translateY(-2px); }
+        .filter-btn.active { background: var(--green); color: white; box-shadow: 0 4px 15px rgba(34,197,94,0.35); }
+
+        /* ── PROMO BANNER ── */
+        .promo-banner {
+            background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
+            border-radius: 24px; padding: 50px 60px;
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 30px; margin-bottom: 60px;
+            position: relative; overflow: hidden; transition: var(--transition);
+        }
+        .promo-banner:hover { transform: translateY(-4px); box-shadow: 0 24px 60px rgba(34,197,94,0.35); }
+        .promo-banner::before {
+            content: ''; position: absolute;
+            top: -40px; right: -40px; width: 220px; height: 220px;
+            background: rgba(255,255,255,0.08); border-radius: 50%; transition: var(--transition);
+        }
+        .promo-banner:hover::before { transform: scale(1.2); }
+        .promo-text { color: white; position: relative; z-index: 1; }
+        .promo-text h2 { font-family: 'Playfair Display', serif; font-size: 36px; margin-bottom: 10px; }
+        .promo-text p { font-size: 15px; opacity: 0.88; margin-bottom: 22px; }
+        .btn-white {
+            background: white; color: var(--green-dark);
+            padding: 12px 30px; border-radius: 10px;
+            font-weight: 700; font-size: 15px; cursor: pointer;
+            border: none; font-family: 'DM Sans', sans-serif;
+            transition: var(--transition); display: inline-block;
+        }
+        .btn-white:hover { background: #f0fdf4; transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.15); }
+        .promo-img {
+            width: 200px; height: 160px;
+            background: rgba(255,255,255,0.15); border-radius: 18px;
+            overflow: hidden; flex-shrink: 0;
+            position: relative; z-index: 1; transition: var(--transition);
+        }
+        .promo-img:hover { transform: rotate(-3deg) scale(1.05); }
+        .promo-img img { width: 100%; height: 100%; object-fit: cover; }
+
+        /* ── MENU SECTION ── */
+        .menu-section { padding: 40px 0 100px; }
+        .category-block { margin-bottom: 64px; }
+        .category-block.hidden-cat { display: none; }
+
+        .category-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px; margin-bottom: 30px;
+            display: flex; align-items: center; gap: 14px;
+        }
+        .cat-icon {
+            width: 50px; height: 50px;
+            background: var(--green-light); border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; transition: var(--transition); flex-shrink: 0;
+        }
+        .category-title:hover .cat-icon { background: var(--green); transform: rotate(10deg) scale(1.1); }
+        .category-title::after {
+            content: ''; flex: 1; height: 2px;
+            background: linear-gradient(to right, var(--green-light), transparent);
+            border-radius: 2px;
+        }
+
+        .menu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+
+        /* ── MENU CARD ── */
+        .menu-card {
+            background: white; border-radius: 22px; overflow: hidden;
+            box-shadow: var(--shadow); transition: var(--transition);
+            border: 2px solid transparent; cursor: pointer; position: relative;
+        }
+        .menu-card:hover { transform: translateY(-12px) scale(1.02); box-shadow: var(--shadow-hover); border-color: var(--green); }
+
+        .badge {
+            position: absolute; top: 12px; left: 12px;
+            color: white; font-size: 11px; font-weight: 700;
+            padding: 4px 11px; border-radius: 20px; z-index: 3;
+            letter-spacing: 0.5px; transition: var(--transition);
+        }
+        .menu-card:hover .badge { transform: scale(1.1); }
+        .badge-popular { background: var(--green); }
+        .badge-hot     { background: #EF4444; }
+        .badge-new     { background: #8B5CF6; }
+        .badge-sale    { background: #F59E0B; }
+
+        .card-img { width: 100%; height: 185px; background: #F3F4F6; overflow: hidden; position: relative; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.55s ease; }
+        .menu-card:hover .card-img img { transform: scale(1.12); }
+
+        .card-overlay {
+            position: absolute; inset: 0;
+            background: rgba(17,24,39,0.52);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; transition: opacity 0.35s; z-index: 2;
+        }
+        .menu-card:hover .card-overlay { opacity: 1; }
+        .card-overlay span {
+            color: white; font-weight: 700; font-size: 14px;
+            background: rgba(34,197,94,0.9); padding: 8px 20px; border-radius: 30px;
+            transform: translateY(10px); transition: transform 0.35s;
+        }
+        .menu-card:hover .card-overlay span { transform: translateY(0); }
+
+        .card-body { padding: 16px; }
+        .card-stars { display: flex; align-items: center; gap: 2px; margin-bottom: 6px; font-size: 12px; color: #F59E0B; }
+        .card-stars span { color: var(--gray); margin-left: 4px; font-size: 11px; }
+        .card-body h3 { font-size: 15px; font-weight: 700; margin-bottom: 5px; transition: color 0.3s; }
+        .menu-card:hover .card-body h3 { color: var(--green-dark); }
+        .card-body p { font-size: 12px; color: var(--gray); margin-bottom: 14px; line-height: 1.5; }
+        .card-footer { display: flex; justify-content: space-between; align-items: center; }
+        .card-price { font-size: 19px; font-weight: 800; color: var(--green-dark); transition: var(--transition); }
+        .menu-card:hover .card-price { transform: scale(1.08); }
+
+        .add-btn {
+            width: 36px; height: 36px; border-radius: 11px;
+            background: var(--green); color: white; border: none;
+            font-size: 22px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: var(--transition); font-family: 'DM Sans', sans-serif; line-height: 1;
+        }
+        .add-btn:hover { background: var(--green-dark); transform: rotate(90deg) scale(1.2); box-shadow: 0 6px 20px rgba(34,197,94,0.45); }
+
+        /* ── FOOTER ── */
+        .footer { background: #F3F4F6; padding: 60px 0 0; }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 50px; }
+        .footer-col h4 { margin-bottom: 18px; font-size: 17px; font-weight: 700; font-family: 'Playfair Display', serif; }
+        .footer-col p { color: var(--gray); font-size: 14px; margin-bottom: 16px; line-height: 1.7; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 10px; }
+        .footer-col ul li a {
+            color: var(--gray); font-size: 14px;
+            display: inline-flex; align-items: center; gap: 6px;
+            transition: var(--transition); padding: 3px 0;
+        }
+        .footer-col ul li a::before {
+            content: '›'; color: var(--green); font-size: 18px;
+            transform: translateX(-4px); opacity: 0; transition: var(--transition);
+        }
+        .footer-col ul li a:hover { color: var(--green-dark); transform: translateX(6px); }
+        .footer-col ul li a:hover::before { opacity: 1; transform: translateX(0); }
+        .footer-input { display: flex; gap: 6px; margin-top: 10px; }
+        .footer-input input {
+            flex: 1; padding: 10px 14px;
+            border: 1.5px solid #D1D5DB; border-radius: 8px;
+            font-family: 'DM Sans', sans-serif; font-size: 13px; transition: var(--transition);
+        }
+        .footer-input input:focus { outline: none; border-color: var(--green); }
+        .footer-input button {
+            background: var(--green); color: white; border: none;
+            padding: 10px 16px; border-radius: 8px; cursor: pointer;
+            font-weight: 600; font-size: 15px; transition: var(--transition);
+        }
+        .footer-input button:hover { background: var(--green-dark); transform: translateX(3px); }
+        .contact-item {
+            display: flex; gap: 10px; margin-bottom: 12px;
+            color: var(--gray); font-size: 14px; padding: 8px 12px;
+            border-radius: 8px; transition: var(--transition); cursor: default;
+        }
+        .contact-item:hover { background: white; color: var(--dark); transform: translateX(5px); box-shadow: 0 4px 15px rgba(0,0,0,0.06); }
+        .instagram-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .instagram-grid img {
+            width: 100%; height: 70px; background: #E5E7EB; border-radius: 10px;
+            object-fit: cover; transition: var(--transition); cursor: pointer;
+        }
+        .instagram-grid img:hover { transform: scale(1.08); box-shadow: 0 6px 20px rgba(34,197,94,0.25); filter: brightness(1.05) saturate(1.2); }
+        .footer-bottom { background: var(--green); color: white; padding: 20px 0; text-align: center; font-size: 14px; }
+        .footer-bottom .container { display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom a { margin: 0 10px; opacity: 0.85; transition: opacity 0.3s; }
+        .footer-bottom a:hover { opacity: 1; text-decoration: underline; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(28px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .menu-card { animation: fadeUp 0.45s ease both; }
+        .menu-grid .menu-card:nth-child(2) { animation-delay: 0.07s; }
+        .menu-grid .menu-card:nth-child(3) { animation-delay: 0.14s; }
+        .menu-grid .menu-card:nth-child(4) { animation-delay: 0.21s; }
+    </style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+    <div class="container">
+        <a href="index.html" class="logo">FoodI</a>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="menu.html" class="active">Menu</a>
+            <a href="service.html">Service</a>
+            <a href="shop.html">Shop</a>
+        </nav>
+        <div class="header-btns">
+            <a href="#" class="icon-btn">🔍</a>
+            <a href="#" class="icon-btn">🛒</a>
+            <a href="signin.html" class="btn btn-green">Sign In</a>
+        </div>
+    </div>
+</header>
+
+<!-- HERO -->
+<section class="menu-hero">
+    <div class="container">
+        <h1>Our Full <span>Menu</span></h1>
+        <p>Fresh ingredients, bold flavors — handcrafted for every craving</p>
+        <div class="breadcrumb">
+            <a href="index.html">Home</a> › Menu
+        </div>
+    </div>
+</section>
+
+<!-- FILTER TABS -->
+<section class="filter-section">
+    <div class="container">
+        <div class="filter-tabs">
+            <button class="filter-btn active" data-cat="all">🍽️ All Items</button>
+            <button class="filter-btn" data-cat="burgers">🍔 Burgers</button>
+            <button class="filter-btn" data-cat="pizza">🍕 Pizza</button>
+            <button class="filter-btn" data-cat="salads">🥗 Salads</button>
+            <button class="filter-btn" data-cat="drinks">🥤 Drinks</button>
+            <button class="filter-btn" data-cat="desserts">🍰 Desserts</button>
+        </div>
+    </div>
+</section>
+
+<!-- MENU -->
+<section class="menu-section">
+    <div class="container">
+
+        <!-- PROMO -->
+        <div class="promo-banner">
+            <div class="promo-text">
+                <h2>Get 20% Off Your First Order!</h2>
+                <p>Use code <strong>FOODI20</strong> at checkout. Limited time offer.</p>
+                <a href="#" class="btn-white">Order Now →</a>
+            </div>
+            <div class="promo-img">
+                <img src="./img/big-burger.png" alt="Promo">
+            </div>
+        </div>
+
+        <!-- BURGERS -->
+        <div class="category-block" data-category="burgers">
+            <h2 class="category-title"><span class="cat-icon">🍔</span> Burgers</h2>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <span class="badge badge-popular">Popular</span>
+                    <div class="card-img">
+                        <img src="./img/burger_sandwich_PNG4135 1.png" alt="Classic Burger">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(128)</span></div>
+                        <h3>Classic Burger</h3>
+                        <p>Juicy beef patty, fresh lettuce, tomato, cheddar cheese</p>
+                        <div class="card-footer">
+                            <span class="card-price">$8.99</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <span class="badge badge-hot">Hot 🔥</span>
+                    <div class="card-img">
+                        <img src="./img/burger_sandwich_PNG4135 1.png" alt="Spicy Volcano">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★☆ <span>(94)</span></div>
+                        <h3>Spicy Volcano</h3>
+                        <p>Extra spicy jalapeño, sriracha mayo, crispy onion rings</p>
+                        <div class="card-footer">
+                            <span class="card-price">$10.99</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="card-img">
+                        <img src="./img/burger_sandwich_PNG4135 1.png" alt="BBQ Smash">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(76)</span></div>
+                        <h3>BBQ Smash</h3>
+                        <p>Double smash patty, caramelized onions, BBQ sauce</p>
+                        <div class="card-footer">
+                            <span class="card-price">$13.50</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <span class="badge badge-new">New</span>
+                    <div class="card-img">
+                        <img src="./img/burger_sandwich_PNG4135 1.png" alt="Truffle Mushroom">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(41)</span></div>
+                        <h3>Truffle Mushroom</h3>
+                        <p>Wild mushrooms, truffle aioli, aged gruyère, arugula</p>
+                        <div class="card-footer">
+                            <span class="card-price">$15.99</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PIZZA -->
+        <div class="category-block" data-category="pizza">
+            <h2 class="category-title"><span class="cat-icon">🍕</span> Pizza</h2>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <span class="badge badge-popular">Popular</span>
+                    <div class="card-img">
+                        <img src="./img/pizza.png" alt="Margherita">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(215)</span></div>
+                        <h3>Margherita</h3>
+                        <p>San Marzano tomato, fresh mozzarella, basil, olive oil</p>
+                        <div class="card-footer">
+                            <span class="card-price">$14.99</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <span class="badge badge-hot">Hot 🔥</span>
+                    <div class="card-img">
+                        <img src="./img/pizza2.jpg" alt="Pepperoni Storm">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(187)</span></div>
+                        <h3>Pepperoni Storm</h3>
+                        <p>Double pepperoni, mozzarella, spicy tomato sauce</p>
+                        <div class="card-footer">
+                            <span class="card-price">$16.99</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="card-img">
+                        <img src="./img/pizza.png" alt="BBQ Chicken">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★☆ <span>(102)</span></div>
+                        <h3>BBQ Chicken</h3>
+                        <p>Grilled chicken, red onion, BBQ sauce, cilantro</p>
+                        <div class="card-footer">
+                            <span class="card-price">$17.50</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <span class="badge badge-new">New</span>
+                    <div class="card-img">
+                        <img src="./img/pizza2.jpg" alt="Four Cheese">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(58)</span></div>
+                        <h3>Four Cheese</h3>
+                        <p>Mozzarella, gorgonzola, parmesan, ricotta blend</p>
+                        <div class="card-footer">
+                            <span class="card-price">$18.99</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SALADS -->
+        <div class="category-block" data-category="salads">
+            <h2 class="category-title"><span class="cat-icon">🥗</span> Salads</h2>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <span class="badge badge-popular">Popular</span>
+                    <div class="card-img">
+                        <img src="./img/salad.jpg" alt="Caesar Salad">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(143)</span></div>
+                        <h3>Caesar Salad</h3>
+                        <p>Romaine lettuce, croutons, parmesan, caesar dressing</p>
+                        <div class="card-footer">
+                            <span class="card-price">$11.50</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="card-img">
+                        <img src="./img/salad.jpg" alt="Greek Salad">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★☆ <span>(89)</span></div>
+                        <h3>Greek Salad</h3>
+                        <p>Tomato, cucumber, olives, feta cheese, oregano</p>
+                        <div class="card-footer">
+                            <span class="card-price">$12.00</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <span class="badge badge-new">New</span>
+                    <div class="card-img">
+                        <img src="./img/salad.jpg" alt="Avocado Bowl">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(52)</span></div>
+                        <h3>Avocado Power Bowl</h3>
+                        <p>Quinoa, avocado, edamame, sesame ginger dressing</p>
+                        <div class="card-footer">
+                            <span class="card-price">$14.00</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="card-img">
+                        <img src="./img/beef.jpg" alt="Green Protein Bowl">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★☆ <span>(67)</span></div>
+                        <h3>Green Protein Bowl</h3>
+                        <p>Grilled chicken, green beans, broccoli, lemon vinaigrette</p>
+                        <div class="card-footer">
+                            <span class="card-price">$13.50</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DRINKS -->
+        <div class="category-block" data-category="drinks">
+            <h2 class="category-title"><span class="cat-icon">🥤</span> Drinks</h2>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <span class="badge badge-popular">Popular</span>
+                    <div class="card-img">
+                        <img src="./img/food-combo.png" alt="Fresh Lemonade">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(201)</span></div>
+                        <h3>Fresh Lemonade</h3>
+                        <p>Freshly squeezed lemons, mint, honey, sparkling water</p>
+                        <div class="card-footer">
+                            <span class="card-price">$4.99</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="card-img">
+                        <img src="./img/food-combo.png" alt="Mango Smoothie">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(134)</span></div>
+                        <h3>Mango Smoothie</h3>
+                        <p>Fresh mango, banana, yogurt, orange juice blend</p>
+                        <div class="card-footer">
+                            <span class="card-price">$5.99</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <span class="badge badge-new">New</span>
+                    <div class="card-img">
+                        <img src="./img/food-combo.png" alt="Iced Coffee">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★☆ <span>(78)</span></div>
+                        <h3>Iced Caramel Coffee</h3>
+                        <p>Cold brew, oat milk, caramel drizzle, vanilla syrup</p>
+                        <div class="card-footer">
+                            <span class="card-price">$6.50</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="card-img">
+                        <img src="./img/food-combo.png" alt="Berry Blast">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(95)</span></div>
+                        <h3>Berry Blast</h3>
+                        <p>Mixed berries, açaí, chia seeds, coconut water</p>
+                        <div class="card-footer">
+                            <span class="card-price">$6.99</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DESSERTS -->
+        <div class="category-block" data-category="desserts">
+            <h2 class="category-title"><span class="cat-icon">🍰</span> Desserts</h2>
+            <div class="menu-grid">
+                <div class="menu-card">
+                    <span class="badge badge-popular">Popular</span>
+                    <div class="card-img">
+                        <img src="./img/cake.png" alt="Choco Lava Cake">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(176)</span></div>
+                        <h3>Choco Lava Cake</h3>
+                        <p>Warm chocolate cake, molten center, vanilla ice cream</p>
+                        <div class="card-footer">
+                            <span class="card-price">$7.99</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <span class="badge badge-hot">Hot 🔥</span>
+                    <div class="card-img">
+                        <img src="./img/cake.png" alt="NY Cheesecake">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(142)</span></div>
+                        <h3>NY Cheesecake</h3>
+                        <p>Creamy cheesecake, graham cracker crust, berry compote</p>
+                        <div class="card-footer">
+                            <span class="card-price">$8.50</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <div class="card-img">
+                        <img src="./img/cake.png" alt="Classic Tiramisu">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★☆ <span>(88)</span></div>
+                        <h3>Classic Tiramisu</h3>
+                        <p>Mascarpone, espresso soaked ladyfingers, cocoa powder</p>
+                        <div class="card-footer">
+                            <span class="card-price">$7.50</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="menu-card">
+                    <span class="badge badge-new">New</span>
+                    <div class="card-img">
+                        <img src="./img/cake.png" alt="Glazed Donut Box">
+                        <div class="card-overlay"><span>👁 View Details</span></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-stars">★★★★★ <span>(63)</span></div>
+                        <h3>Glazed Donut Box</h3>
+                        <p>Freshly baked, chocolate & strawberry glaze, sprinkles</p>
+                        <div class="card-footer">
+                            <span class="card-price">$5.99</span>
+                            <button class="add-btn">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>Foodtrack</h4>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Commodo libero viverra dapibus odio sit malesuada.</p>
+                <div class="footer-input">
+                    <input type="text" placeholder="Your Email">
+                    <button>→</button>
+                </div>
+            </div>
+            <div class="footer-col">
+                <h4>Contact us</h4>
+                <div class="contact-item">📍 1234 Street Name, City Name</div>
+                <div class="contact-item">📞 +0123-456789</div>
+                <div class="contact-item">✉️ info@foodtrack.com</div>
+                <div class="contact-item">🕐 Sun - Sat / 10:00 AM - 8:00 PM</div>
+            </div>
+            <div class="footer-col">
+                <h4>Links</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="menu.html">Our Menu</a></li>
+                    <li><a href="#">Team</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Instagram Gallery</h4>
+                <div class="instagram-grid">
+                    <img src="./img/in-1.jpg" alt="">
+                    <img src="./img/in-2.jpg" alt="">
+                    <img src="./img/in-3.jpg" alt="">
+                    <img src="./img/in-4.jpg" alt="">
+                    <img src="./img/in-5.jpg" alt="">
+                    <img src="./img/in-6.jpg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <span>© 2024 Foodtrack. All rights reserved.</span>
+            <div>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Filter tabs
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const categoryBlocks = document.querySelectorAll('.category-block');
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            filterBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const cat = btn.dataset.cat;
+            categoryBlocks.forEach(block => {
+                if (cat === 'all' || block.dataset.category === cat) {
+                    block.classList.remove('hidden-cat');
+                } else {
+                    block.classList.add('hidden-cat');
+                }
+            });
+        });
+    });
+
+    // Add to cart animation
+    document.querySelectorAll('.add-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            const orig = this.textContent;
+            this.textContent = '✓';
+            this.style.background = '#16A34A';
+            this.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                this.textContent = orig;
+                this.style.background = '';
+                this.style.transform = '';
+            }, 1200);
+        });
+    });
+</script>
+</body>
+</html>
